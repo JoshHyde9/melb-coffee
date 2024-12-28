@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Country {
+    id          Int      @id @default(autoincrement())
+    name        String   @unique
+    latitude    Float // Latitude of the country center
+    longitude   Float // Longitude of the country center
+    information String[] // List of information about the country related to coffee
+}
