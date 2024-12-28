@@ -1,16 +1,92 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum RoastType {
+    LIGHT
+    MEDIUM
+    DARK
+}
+
+model Roaster {
+    id          Int      @id @default(autoincrement())
+    name        String   @unique
+    website     String
+    description String
+    latitude    Float
+    longitude   Float
+    createdAt   DateTime
+
+    Coffee      Coffee[]
+}
+
+model Variety {
+    id   Int    @id @default(autoincrement())
+    name String @unique
+
+    Coffee   Coffee? @relation(fields: [coffeeId], references: [id])
+    coffeeId Int?
+
+    Region   Region? @relation(fields: [regionId], references: [id])
+    regionId Int?
+}
+
+model Coffee {
+    id               Int    @id @default(autoincrement())
+    name             String @unique
+    processingMethod String[]
+
+    isSingleOrigin Boolean   @default(true)
+    roastType      RoastType @default(DARK)
+
+    roaster        Roaster   @relation(fields: [roasterId], references: [id])
+
+    variety Variety[]
+    region  Region[]
+    country Country[]
+
+    tastingNotes String[]
+    roasterId    Int
+}
+
+model Region {
+    id   Int    @id @default(autoincrement())
+    name String @unique
+
+    countryId Int
+    country   Country @relation(fields: [countryId], references: [id])
+
+    latitude  Float?
+    longitude Float?
+
+    variety Variety[]
+
+    Coffee   Coffee? @relation(fields: [coffeeId], references: [id])
+    coffeeId Int?
+
+    precipitation  Int?
+    temperature    Float?
+    temperatureMin Float?
+    temperatureMax Float?
+    humidity       Float?
+    elevation      Int?
+    soilType       String?
 }
 
 model Country {
     id          Int      @id @default(autoincrement())
     name        String   @unique
-    latitude    Float // Latitude of the country center
-    longitude   Float // Longitude of the country center
-    information String[] // List of information about the country related to coffee
+    latitude    Float
+    longitude   Float
+    information String[]
+
+    region Region[]
+
+    Coffee   Coffee? @relation(fields: [coffeeId], references: [id])
+    coffeeId Int?
 }
