@@ -1,9 +1,10 @@
 import { Elysia } from "elysia";
-import { epicRouter } from "./router/epic";
+
+import { varietyRouter } from "./router/variety";
 
 const app = new Elysia({ prefix: "/api" })
   .get("/", () => "Hello from Elysia.")
-  .use(epicRouter);
+  .use(varietyRouter)
 
 export type App = typeof app;
 
