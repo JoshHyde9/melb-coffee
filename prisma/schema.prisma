@@ -29,10 +29,12 @@ model Variety {
     id   Int    @id @default(autoincrement())
     name String @unique
 
-    Coffee   Coffee? @relation(fields: [coffeeId], references: [id])
+    coffee   Coffee? @relation(fields: [coffeeId], references: [id])
     coffeeId Int?
 
-    Region   Region? @relation(fields: [regionId], references: [id])
+     tastingNotes String[]
+
+    region   Region? @relation(fields: [regionId], references: [id])
     regionId Int?
 }
 
@@ -50,7 +52,6 @@ model Coffee {
     region  Region[]
     country Country[]
 
-    tastingNotes String[]
     roasterId    Int
 }
 
