@@ -1,4 +1,4 @@
-# Melbourne Coffee
+# Melbourne Bean Scene
 
 The one stop shop for all things coffee in Melbourne
 
