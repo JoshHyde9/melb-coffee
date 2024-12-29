@@ -1,5 +1,3 @@
-import { ModeToggle } from "@/components/theme-toggle";
-
 import { api } from "@/lib/treaty";
 
 import {
@@ -16,9 +14,6 @@ export default async function Home() {
 
   return (
     <div>
-      <ModeToggle />
-      <h1>Hello from Next</h1>
-
       {varieties.data?.map((variety) => (
         <Card key={variety.id}>
           <CardHeader>
@@ -27,7 +22,9 @@ export default async function Home() {
           </CardHeader>
           <CardContent>
             {variety.tastingNotes.map((note, i) => (
-              <Badge className="mx-1" variant="outline" key={i}>{note}</Badge>
+              <Badge className="mx-1" variant="outline" key={i}>
+                {note}
+              </Badge>
             ))}
           </CardContent>
         </Card>
